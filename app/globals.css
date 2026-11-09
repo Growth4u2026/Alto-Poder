@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* Cores da Alta */
+:root {
+  --fundo: #fbf8fd;
+  --texto: #2a1f33;
+  --suave: #6f6378;
+  --marca: #7b3fbf;
+  --marca-forte: #5e2a9a;
+  --marca-clara: #efe6f8;
+  --cartao: #ffffff;
+  --borda: #e6dcef;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fundo: #17121c;
+    --texto: #f3eef7;
+    --suave: #b2a7bb;
+    --marca: #b585ec;
+    --marca-forte: #cda6f5;
+    --marca-clara: #2c2238;
+    --cartao: #211a28;
+    --borda: #3a2f45;
+  }
+}
+
+@theme inline {
+  --color-fundo: var(--fundo);
+  --color-texto: var(--texto);
+  --color-suave: var(--suave);
+  --color-marca: var(--marca);
+  --color-marca-forte: var(--marca-forte);
+  --color-marca-clara: var(--marca-clara);
+  --color-cartao: var(--cartao);
+  --color-borda: var(--borda);
+  --font-sans: var(--font-geist-sans);
+}
+
+body {
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
