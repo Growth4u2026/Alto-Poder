@@ -209,7 +209,18 @@ export default function Jornada({ estado, textos }: { estado: EstadoJornada; tex
       <div className="sticky bottom-0 -mx-4 border-t border-borda bg-fundo/95 px-4 pb-4 pt-3 backdrop-blur">
         {passo.tipo === "consentimento" && (
           <div className="space-y-2">
-            <button onClick={aceitar} disabled={ocupado} className={`${botao} w-full`}>SIM, pode guardar 💜</button>
+            <CampoTexto
+              valor={resposta}
+              onMudar={setResposta}
+              ocupado={ocupado}
+              dica="Escreve SIM aqui…"
+              onEnviar={() => {
+                const r = resposta.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z]/g, "");
+                if (r === "sim" || r === "pode" || r === "podesim") aceitar();
+                else setAviso("Tudo bem! Sem o seu SIM eu não guardo nada. Quando quiser, é só me responder SIM 💜");
+              }}
+            />
+            <button onClick={aceitar} disabled={ocupado} className={`${botaoClaro} w-full py-2 text-sm`}>Ou toca aqui: SIM, pode guardar 💜</button>
             <p className="text-center text-xs text-suave">
               Leia a <a href="/privacidade" className="underline" target="_blank">política de privacidade</a>. Nunca peço CPF, senhas ou dados bancários.
             </p>
