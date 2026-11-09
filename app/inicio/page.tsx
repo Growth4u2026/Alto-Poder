@@ -1,4 +1,6 @@
 import { Suspense } from "react";
+import Link from "next/link";
+import { ehAdmin } from "@/lib/admin";
 import { carregarTextos } from "@/lib/alta/textos-servidor";
 import { estadoDaJornada } from "@/lib/jornada";
 import { alunoLogado } from "@/lib/sessao";
@@ -32,9 +34,14 @@ async function Conteudo() {
             <p className="text-xs text-suave">{NOME_PLANO[aluno.plano]}</p>
           </div>
         </div>
-        <form action={sair}>
-          <button className="text-sm text-marca hover:underline">Sair</button>
-        </form>
+        <div className="flex items-center gap-4">
+          {ehAdmin(aluno) && (
+            <Link href="/admin" className="rounded-lg bg-marca-clara px-3 py-1.5 text-sm font-medium text-marca">Painel</Link>
+          )}
+          <form action={sair}>
+            <button className="text-sm text-marca hover:underline">Sair</button>
+          </form>
+        </div>
       </header>
       <Jornada estado={estado} textos={textos} />
     </>
