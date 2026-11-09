@@ -5,6 +5,7 @@
       "name": "alta",
       "runtimeExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
       "runtimeArgs": ["run", "dev"],
+      "env": { "NODE_OPTIONS": "--use-system-ca" },
       "port": 3000
     }
   ]

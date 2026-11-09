@@ -1,6 +1,4 @@
-import { redirect } from "next/navigation";
-
-// Tarefa 0.3 vai checar se a pessoa já está logada e mandar para /inicio.
+// A raiz é encaminhada pelo proxy.ts: para /inicio (logado) ou /entrar (não logado).
 export default function Home() {
-  redirect("/entrar");
+  return null;
 }
