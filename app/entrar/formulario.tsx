@@ -4,8 +4,8 @@ import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { confirmarCodigo, pedirAcesso } from "./acoes";
 
-// Login sem senha. Hoje o e-mail traz um LINK (modelo padrão do Supabase).
-// Quando o envio próprio (Resend) estiver ligado, o e-mail passa a trazer também o código de 6 dígitos.
+// Login sem senha: e-mail + código (enviado pelo Resend, modelo de e-mail com {{ .Token }}).
+// O link do e-mail, se existir, continua funcionando pela rota /auth/retorno.
 
 const AVISOS_DA_URL: Record<string, string> = {
   fora: "Oi! Esse acesso é exclusivo para alunos da Growth4u e participantes do ALTO PODER. Se você já é, fala com o time da Growth4u.",
@@ -64,36 +64,35 @@ export default function FormularioEntrar() {
           <button type="submit" disabled={enviando} className={botao}>
             {enviando ? "Enviando…" : "Entrar"}
           </button>
-          <p className="text-center text-xs text-suave">Sem senha: a gente te manda um link de acesso por e-mail.</p>
+          <p className="text-center text-xs text-suave">Sem senha: a gente te manda um código de acesso por e-mail.</p>
         </form>
       ) : (
         <div className="space-y-4">
           <p className="text-sm">
-            Prontinho! Mandei um e-mail para <strong>{email}</strong>. É só abrir e tocar em <strong>“Sign in”</strong>{" "}
-            neste mesmo aparelho. Confere o spam também, tá?
+            Prontinho! Mandei um código para <strong>{email}</strong>. Confere a caixa de entrada (e o spam também, tá?).
           </p>
 
-          <details className="rounded-xl bg-marca-clara px-4 py-3 text-sm">
-            <summary className="cursor-pointer">Recebi um código de 6 dígitos</summary>
-            <form onSubmit={enviarCodigo} className="mt-3 space-y-3">
+          <form onSubmit={enviarCodigo} className="space-y-3">
+            <label className="block">
+              <span className="text-sm font-medium">Código</span>
               <input
                 type="text"
                 required
+                autoFocus
                 inputMode="numeric"
                 autoComplete="one-time-code"
-                pattern="[0-9]{6}"
-                maxLength={6}
+                pattern="[0-9]{6,8}"
+                maxLength={8}
                 value={codigo}
                 onChange={(e) => setCodigo(e.target.value.replace(/\D/g, ""))}
                 placeholder="000000"
-                aria-label="Código"
-                className={`${campo} text-center text-2xl tracking-[0.5em]`}
+                className={`${campo} text-center text-2xl tracking-[0.4em]`}
               />
-              <button type="submit" disabled={enviando} className={botao}>
-                {enviando ? "Conferindo…" : "Entrar com o código"}
-              </button>
-            </form>
-          </details>
+            </label>
+            <button type="submit" disabled={enviando} className={botao}>
+              {enviando ? "Conferindo…" : "Entrar"}
+            </button>
+          </form>
 
           <button
             type="button"
